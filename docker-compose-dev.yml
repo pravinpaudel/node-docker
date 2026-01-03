@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node-app:
+    build:
+      context: . # Build the Dockerfile in the current directory
+      args:
+        NODE_ENV: development
+    volumes:
+      - ./:/app # Bind mount. Mount the current directory to /app in the container
+      - /app/node_modules # Ensure node_modules is not overwritten
+    environment:
+      - NODE_ENV=development # Set environment variable NODE_ENV to development
+    command: npm run dev # Override the default command to run the development server

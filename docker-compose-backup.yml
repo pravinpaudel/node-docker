@@ -1,0 +1,15 @@
+# docker run -p 3000:3000 -v "$PWD":/app:ro -v /app/node_modules -d --name node-app node-app-image
+version: '3' # specify docker-compose version
+services: # Define services or your containers
+  node-app: # Name of the service
+    build: . # Build the Dockerfile in the current directory
+    ports:
+      - "3000:3000" # Map port 3000 of the host to port 3000 of the container
+    volumes:
+      - ./:/app # Mount the current directory to /app in the container
+      - /app/node_modules # Ensure node_modules is not overwritten
+    environment:
+      - PORT=3000 # Set environment variable PORT to 3000
+
+# To run the application, use the command: docker-compose up -d 
+# --build flag can be added to rebuild the image if there are changes in the Dockerfile or dependencies.

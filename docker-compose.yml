@@ -1,0 +1,27 @@
+# Shared Docker Compose configuration file for development and production environments
+version: '3'
+services:
+  node-app:
+    build: .
+    ports: 
+      - "3000:3000"
+    environment:
+      - PORT=3000
+
+  mongo:
+    image: mongo # Use the predefined MongoDB image from Docker Hub, rather than building a custom one like the node-app service
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=pravin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - mongo-db:/data/db # Named volume to persist MongoDB data
+
+volumes:
+  mongo-db:
+
+# docker-compose -f ./docker-compose.yml -f ./docker-compose-dev.yml up -d --build # for development (first loads up the base file, then the dev overrides) 
+# docker exec -it node-docker-mongo-1 mongosh -u "pravin" -p "secret" # to access the mongo shell inside the running container
+# So far 3 types of volumes have been used:
+# 1. Bind mount: Mounts a file or directory from the host machine into the container (e.g., ./:/app)
+# 2. Named volume: Managed by Docker and can be reused across multiple containers (e.g., mongo-db)
+# 3. Anonymous volume: Created by Docker when no specific volume name is provided (e.g., /app/node_modules)

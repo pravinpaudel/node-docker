@@ -1,0 +1,11 @@
+version: '3'
+services:
+  node-app:
+    build:
+        context: . # Build the Dockerfile in the current directory
+        args:
+          - NODE_ENV=production
+    environment:
+      - NODE_ENV=production # Set environment variable NODE_ENV to production
+    command: node index.js # Override the default command to run the production server
+  
