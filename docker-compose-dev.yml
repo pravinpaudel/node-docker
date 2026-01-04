@@ -10,4 +10,12 @@ services:
       - /app/node_modules # Ensure node_modules is not overwritten
     environment:
       - NODE_ENV=development # Set environment variable NODE_ENV to development
+      - MONGO_USER=pravin
+      - MONGO_PASSWORD=secret
+      - SESSION_SECRET=mysupersecret
     command: npm run dev # Override the default command to run the development server
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=pravin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+      

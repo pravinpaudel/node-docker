@@ -7,6 +7,9 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+    # Want to start mongo container first before node-app starts
+    depends_on: 
+      - mongo
 
   mongo:
     image: mongo # Use the predefined MongoDB image from Docker Hub, rather than building a custom one like the node-app service
@@ -15,6 +18,9 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
       - mongo-db:/data/db # Named volume to persist MongoDB data
+
+  redis:
+    image: redis # Use the predefined Redis image from Docker Hub
 
 volumes:
   mongo-db:
@@ -25,3 +31,6 @@ volumes:
 # 1. Bind mount: Mounts a file or directory from the host machine into the container (e.g., ./:/app)
 # 2. Named volume: Managed by Docker and can be reused across multiple containers (e.g., mongo-db)
 # 3. Anonymous volume: Created by Docker when no specific volume name is provided (e.g., /app/node_modules)
+
+# No need to do down and up again and again, just do a rebuild with the following command:
+# docker-compose -f ./docker-compose.yml -f ./docker-compose-dev.yml up -d --build -V # The -V flag is used to recreate anonymous volumes, ensuring that any changes in the volume definitions are applied. (It will create fresh volumes and not fetch the old one who contains old dependencies)
