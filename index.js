@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { createClient } = require('redis');
 const session = require('express-session');
 const postRouter = require('./routes/postRoute');
@@ -38,6 +39,9 @@ const connectWithRetry = () => {
 
 connectWithRetry();
 
+app.enable('trust proxy'); // trust first proxy
+app.use(cors({})); // Enable CORS for all origins
+
 // Set up session middleware. Store sessions in Redis.
 // Attaches req.session object to the request
 // If no cookie with session ID is sent by the client, a new empty session is created = {}.
@@ -64,8 +68,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json()); // Deserialize JSON bodies into JS objects
 
-app.get('/', (req, res) => {
+app.get('/api/v1', (req, res) => {
     res.send('<h2> Hello, World!</h2>');
+    console.log('Request received at /api/v1');
 })
 
 app.use('/api/v1/posts', postRouter);
