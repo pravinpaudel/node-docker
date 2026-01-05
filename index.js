@@ -16,6 +16,7 @@ let redisClient = createClient({
         port: REDIS_PORT
     }
 });
+// This connection is established before any user requests
 redisClient.connect().catch(console.error)
 
 const app = express();
@@ -37,7 +38,10 @@ const connectWithRetry = () => {
 
 connectWithRetry();
 
-
+// Set up session middleware. Store sessions in Redis.
+// Attaches req.session object to the request
+// If no cookie with session ID is sent by the client, a new empty session is created = {}.
+// At this point, req.session is available but not yet saved to Redis (because saveUninitialized: false)
 app.use(session({
     store: new RedisStore({ client: redisClient }),
     secret: SESSION_SECRET,
