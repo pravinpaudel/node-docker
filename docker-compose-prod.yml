@@ -4,7 +4,6 @@ services:
     ports:
       - "80:80" # Map port 80 on the host to port 80 in the container(Nginx)
   node-app:
-    platform: linux/amd64
     deploy: # Deployment configuration for the Node.js application using Docker Swarm
       replicas: 8 # Run 8 replicas of the Node.js application
       restart_policy:
