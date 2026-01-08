@@ -12,6 +12,8 @@ services:
 
   node-app:
     build: . # Build the Docker image for the Node.js application using the Dockerfile in the current directory
+    image: pravinpaudel10/node-app:latest # Use an image from Docker Hub (custom image created and pushed by us)
+    ports:
     environment:
       - PORT=3000
     # Want to start mongo container first before node-app starts

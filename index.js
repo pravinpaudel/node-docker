@@ -22,7 +22,6 @@ redisClient.connect().catch(console.error)
 
 const app = express();
 
-
 // Using mongo instead of IP address. Docker allows us to use service names as hostnames if both services are on the same network.
 const monogURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
 
