@@ -68,7 +68,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json()); // Deserialize JSON bodies into JS objects
 
 app.get('/api/v1', (req, res) => {
-    res.send('<h2> Hello, World!</h2>');
+    res.send('<h2> Hello, World</h2>');
     console.log('Request received at /api/v1');
 })
 

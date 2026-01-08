@@ -4,6 +4,14 @@ services:
     ports:
       - "80:80" # Map port 80 on the host to port 80 in the container(Nginx)
   node-app:
+    deploy: # Deployment configuration for the Node.js application using Docker Swarm
+      replicas: 8 # Run 8 replicas of the Node.js application
+      restart_policy:
+        condition: any # Restart the container on any failure
+      update_config:
+        parallelism: 2 # Update 2 containers at a time during rolling updates
+        delay: 10s # Wait for 10 seconds between updates
+    platform: linux/amd64
     build:
         context: . # Build the Dockerfile in the current directory
         args:
